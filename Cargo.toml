@@ -1,6 +1,6 @@
 [package]
 name = "Rust-GUI-Calculator"
 version = "0.1.0"
-authors = ["Justin Bieber <jzw2@gmail.com>"]
+authors = ["Justin Bieber <jzw2@gmail.com>", "Max Weis <maxrobweis@gmail.com>"]
 
 [dependencies]
