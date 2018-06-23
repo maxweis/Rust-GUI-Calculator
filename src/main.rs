@@ -54,7 +54,11 @@ impl Widget for Win {
                     Err(e) =>  println!("{}", e.to_string()),
                 }
             }
-            Erase => { self.model.expression.pop(); () }
+            Erase => { self.model.expression.pop();
+                    self.model.expression = format!("{}", self.model.expression);
+                
+
+                () }
             Clear => self.model.expression = String::new(),
             Quit => gtk::main_quit(),
             _ => println!("To be implemented"),
@@ -84,7 +88,7 @@ impl Widget for Win {
 
                     gtk::Box {
                         orientation: Horizontal,
-                        
+
                         gtk::Button {
                             clicked => Number(1),
                             label: "1",
@@ -101,12 +105,12 @@ impl Widget for Win {
                             clicked => Clear,
                             label: "C",
                         }
-                        
+
                     },
 
                     gtk::Box {
                         orientation: Horizontal,
-                        
+
                         gtk::Button {
                             clicked => Number(4),
                             label: "4",
@@ -123,12 +127,12 @@ impl Widget for Win {
                             clicked => Erase,
                             label: "<",
                         },
-                        
+
                     },
 
                     gtk::Box {
                         orientation: Horizontal,
-                        
+
                         gtk::Button {
                             clicked => Number(7),
                             label: "7",
@@ -146,10 +150,10 @@ impl Widget for Win {
                             label: "+",
                         },
                     },
-                    
+
                     gtk::Box {
                         orientation: Horizontal,
-                        
+
                         gtk::Button {
                             clicked => Number(0),
                             label: "0",
@@ -197,7 +201,7 @@ impl Widget for Win {
 
 fn main() {
     match Win::run(()) {
-        Ok(x) => println!("Success!"),
+        Ok(_x) => println!("Success!"),
         Err(_) => println!("Error!"),
     }
 }
