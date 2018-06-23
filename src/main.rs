@@ -7,18 +7,11 @@ extern crate relm_attributes;
 extern crate relm_derive;
 extern crate meval;
 
-use gtk::{
-    ButtonExt,
-    Inhibit,
-    LabelExt,
-    OrientableExt,
-    WidgetExt,
-    GtkWindowExt,
-};
-use gtk::Orientation::{Vertical, Horizontal};
+use self::Msg::*;
+use gtk::Orientation::{Horizontal, Vertical};
+use gtk::{ButtonExt, GtkWindowExt, Inhibit, LabelExt, OrientableExt, WidgetExt};
 use relm::Widget;
 use relm_attributes::widget;
-use self::Msg::*;
 
 #[derive(Clone)]
 pub struct Model {
@@ -51,14 +44,21 @@ impl Widget for Win {
                 let evaluated = meval::eval_str(&self.model.expression);
                 match evaluated {
                     Ok(number) => self.model.expression = number.to_string(),
-                    Err(e) =>  println!("{}", e.to_string()),
+                    Err(e) => println!("{}", e.to_string()),
                 }
             }
+<<<<<<< HEAD
             Erase => { self.model.expression.pop();
                     self.model.expression = format!("{}", self.model.expression);
                 
 
                 () }
+=======
+            Erase => {
+                self.model.expression.pop();
+                ()
+            }
+>>>>>>> be272bb7e573272f17bd61bf58bdbdb6dd6916d6
             Clear => self.model.expression = String::new(),
             Quit => gtk::main_quit(),
             _ => println!("To be implemented"),
@@ -125,7 +125,7 @@ impl Widget for Win {
                         },
                         gtk::Button {
                             clicked => Erase,
-                            label: "<",
+                            label: "⌫",
                         },
 
                     },
