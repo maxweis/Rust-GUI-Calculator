@@ -117,7 +117,7 @@ impl Widget for Win {
                         },
                         gtk::Button {
                             clicked => Erase,
-                            label: "<",
+                            label: "⌫",
                         },
 
                     },
