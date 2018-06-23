@@ -7,18 +7,11 @@ extern crate relm_attributes;
 extern crate relm_derive;
 extern crate meval;
 
-use gtk::{
-    ButtonExt,
-    Inhibit,
-    LabelExt,
-    OrientableExt,
-    WidgetExt,
-    GtkWindowExt,
-};
-use gtk::Orientation::{Vertical, Horizontal};
+use self::Msg::*;
+use gtk::Orientation::{Horizontal, Vertical};
+use gtk::{ButtonExt, GtkWindowExt, Inhibit, LabelExt, OrientableExt, WidgetExt};
 use relm::Widget;
 use relm_attributes::widget;
-use self::Msg::*;
 
 #[derive(Clone)]
 pub struct Model {
@@ -51,10 +44,13 @@ impl Widget for Win {
                 let evaluated = meval::eval_str(&self.model.expression);
                 match evaluated {
                     Ok(number) => self.model.expression = number.to_string(),
-                    Err(e) =>  println!("{}", e.to_string()),
+                    Err(e) => println!("{}", e.to_string()),
                 }
             }
-            Erase => { self.model.expression.pop(); () }
+            Erase => {
+                self.model.expression.pop();
+                ()
+            }
             Clear => self.model.expression = String::new(),
             Quit => gtk::main_quit(),
             _ => println!("To be implemented"),
@@ -84,7 +80,7 @@ impl Widget for Win {
 
                     gtk::Box {
                         orientation: Horizontal,
-                        
+
                         gtk::Button {
                             clicked => Number(1),
                             label: "1",
@@ -101,12 +97,12 @@ impl Widget for Win {
                             clicked => Clear,
                             label: "C",
                         }
-                        
+
                     },
 
                     gtk::Box {
                         orientation: Horizontal,
-                        
+
                         gtk::Button {
                             clicked => Number(4),
                             label: "4",
@@ -123,12 +119,12 @@ impl Widget for Win {
                             clicked => Erase,
                             label: "<",
                         },
-                        
+
                     },
 
                     gtk::Box {
                         orientation: Horizontal,
-                        
+
                         gtk::Button {
                             clicked => Number(7),
                             label: "7",
@@ -146,10 +142,10 @@ impl Widget for Win {
                             label: "+",
                         },
                     },
-                    
+
                     gtk::Box {
                         orientation: Horizontal,
-                        
+
                         gtk::Button {
                             clicked => Number(0),
                             label: "0",
