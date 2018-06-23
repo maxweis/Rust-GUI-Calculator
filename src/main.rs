@@ -64,6 +64,7 @@ impl Widget for Win {
             //set smallest possible size with gui elements
             property_default_height: 0,
             property_default_width: 0,
+            resizable: false,
 
             gtk::Box {
                 orientation: Vertical,
