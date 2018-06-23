@@ -17,7 +17,7 @@ impl Calculator {
     fn digit(&mut self, dig: f64) {
         match self.operation {
             None => self.prev_result = dig,
-            Some(ref x) => self.current_result = dig, //idk what ref does
+            _ => self.current_result = dig, //idk what ref does
         }
     }
 
