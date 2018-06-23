@@ -9,7 +9,10 @@ extern crate meval;
 
 use self::Msg::*;
 use gtk::Orientation::{Horizontal, Vertical};
-use gtk::{ButtonExt, GtkWindowExt, Inhibit, LabelExt, OrientableExt, WidgetExt};
+use gtk::{
+    ButtonExt, EditableExt, EditableSignals, EntryExt, GtkWindowExt, Inhibit,
+    OrientableExt, WidgetExt,
+};
 use relm::Widget;
 use relm_attributes::widget;
 
@@ -22,6 +25,7 @@ pub struct Model {
 pub enum Msg {
     Number(i32),
     Operator(String),
+    Change(String),
     Calculate,
     Erase,
     Clear,
@@ -37,14 +41,21 @@ impl Widget for Win {
     }
 
     fn update(&mut self, event: Msg) {
+        if self.model.expression == "Error" {
+            self.model.expression.clear();
+        }
         match event {
             Number(n) => self.model.expression = format!("{}{}", self.model.expression, n),
             Operator(op) => self.model.expression = format!("{}{}", self.model.expression, op),
+            Change(change) => self.model.expression = change,
             Calculate => {
                 let evaluated = meval::eval_str(&self.model.expression);
                 match evaluated {
                     Ok(number) => self.model.expression = number.to_string(),
-                    Err(e) => println!("{}", e.to_string()),
+                    Err(e) => {
+                        println!("{}", e.to_string());
+                        self.model.expression = String::from("Error")
+                    }
                 }
             }
             Erase => {
@@ -70,8 +81,12 @@ impl Widget for Win {
                 orientation: Vertical,
 
                 gtk::Box {
-                    gtk::Label {
+                    gtk::Entry {
+                        activate => Calculate,
+                        changed(entry) => Change(entry.get_text().unwrap()),
                         text: &self.model.expression.to_string(),
+                        position: self.model.expression.len() as i32,
+                        width_chars: 20,
                     },
                 },
 
@@ -194,8 +209,5 @@ impl Widget for Win {
 }
 
 fn main() {
-    match Win::run(()) {
-        Ok(_x) => println!("Success!"),
-        Err(_) => println!("Error!"),
-    }
+    Win::run(()).unwrap();
 }
