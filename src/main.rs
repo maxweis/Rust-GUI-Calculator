@@ -30,6 +30,7 @@ pub enum Msg {
     Number(i32),
     Operator(String),
     Calculate,
+    Erase,
     Clear,
     Quit,
 }
@@ -53,6 +54,7 @@ impl Widget for Win {
                     Err(e) =>  println!("{}", e.to_string()),
                 }
             }
+            Erase => { self.model.expression.pop(); () }
             Clear => self.model.expression = String::new(),
             Quit => gtk::main_quit(),
             _ => println!("To be implemented"),
@@ -118,8 +120,8 @@ impl Widget for Win {
                             label: "6",
                         },
                         gtk::Button {
-                            clicked => Operator("+".to_string()),
-                            label: "+",
+                            clicked => Erase,
+                            label: "<",
                         },
                         
                     },
@@ -140,8 +142,8 @@ impl Widget for Win {
                             label: "9",
                         },
                         gtk::Button {
-                            clicked => Operator("-".to_string()),
-                            label: "-",
+                            clicked => Operator("+".to_string()),
+                            label: "+",
                         },
                     },
                     
@@ -157,12 +159,12 @@ impl Widget for Win {
                             label: ".",
                         },
                         gtk::Button {
-                            clicked => Operator("*".to_string()),
-                            label: "*",
+                            clicked => Operator("%".to_string()),
+                            label: "%",
                         },
                         gtk::Button {
-                            clicked => Operator("/".to_string()),
-                            label: "/",
+                            clicked => Operator("-".to_string()),
+                            label: "-",
                         },
                     },
 
@@ -170,8 +172,20 @@ impl Widget for Win {
                         orientation: Horizontal,
 
                         gtk::Button {
-                                clicked => Calculate,
-                                label: "=",
+                            clicked => Operator("*".to_string()),
+                            label: "*",
+                        },
+                        gtk::Button {
+                            clicked => Operator("/".to_string()),
+                            label: "/",
+                        },
+                        gtk::Button {
+                            clicked => Operator("^".to_string()),
+                            label: "^",
+                        },
+                        gtk::Button {
+                            clicked => Calculate,
+                            label: "=",
                         },
                     },
                 },
