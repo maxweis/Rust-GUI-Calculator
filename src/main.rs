@@ -47,18 +47,9 @@ impl Widget for Win {
                     Err(e) => println!("{}", e.to_string()),
                 }
             }
-<<<<<<< HEAD
             Erase => { self.model.expression.pop();
                     self.model.expression = format!("{}", self.model.expression);
-                
-
-                () }
-=======
-            Erase => {
-                self.model.expression.pop();
-                ()
-            }
->>>>>>> be272bb7e573272f17bd61bf58bdbdb6dd6916d6
+                    () }
             Clear => self.model.expression = String::new(),
             Quit => gtk::main_quit(),
             _ => println!("To be implemented"),
